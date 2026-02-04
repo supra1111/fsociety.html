@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>hello, friend.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Courier New", monospace;
+    }
+
+    body {
+      background: black;
+      color: #00ff9c;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .terminal {
+      padding: 20px;
+      font-size: 14px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .glitch {
+      position: relative;
+      font-size: 42px;
+      color: white;
+      margin-top: 20px;
+      animation: flicker 2s infinite;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      width: 100%;
+      opacity: 0.8;
+    }
+
+    .glitch::before {
+      color: red;
+      animation: glitch 1.5s infinite;
+    }
+
+    .glitch::after {
+      color: cyan;
+      animation: glitch 1s infinite reverse;
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(2px, -2px); }
+      60% { transform: translate(-1px, 1px); }
+      80% { transform: translate(1px, -1px); }
+      100% { transform: translate(0); }
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .links {
+      margin-top: 30px;
+    }
+
+    .links a {
+      display: block;
+      color: #00ff9c;
+      text-decoration: none;
+      margin-bottom: 10px;
+    }
+
+    .links a:hover {
+      color: white;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      background: #00ff9c;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="terminal" id="terminal"></div>
+
+<script>
+  const lines = [
+    "booting system...",
+    "initializing modules...",
+    "connecting to fsociety network...",
+    "access granted.",
+    "",
+    "hello, friend.",
+    "you are not alone.",
+    ""
+  ];
+
+  let i = 0;
+  const terminal = document.getElementById("terminal");
+
+  function typeLine() {
+    if (i < lines.length) {
+      terminal.innerHTML += lines[i] + "\n";
+      i++;
+      setTimeout(typeLine, 500);
+    } else {
+      terminal.innerHTML += `
+<span class="glitch" data-text="fsociety">fsociety</span>
+
+<div class="links">
+  <a href="https://guns.lol/USERNAME">> guns.lol</a>
+  <a href="https://github.com/USERNAME">> github</a>
+  <a href="#">> contact</a>
+</div>
+
+<span class="cursor"></span>
+      `;
+    }
+  }
+
+  typeLine();
+</script>
+
+</body>
+</html>
